@@ -1,6 +1,9 @@
 Hacking Monday : Poker Robot
 ============================
 
+* https://github.com/loganjspears/joker/blob/master/hand/hand.go
+* https://github.com/cmccabe/poker-odds
+
 19-01-2015 : Setup GO environment
 ---------------------------------
 
