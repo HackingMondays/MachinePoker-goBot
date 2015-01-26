@@ -2,11 +2,109 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"encoding/json"
 	"net/http"
 	"github.com/loganjspears/joker/hand"
+	"math/rand"
 )
-// https://golang.org/doc/articles/wiki/
+
+const dataFile = "data/data.json"
+
+
+type Game struct {
+	Community [] *string
+	State     	  string
+	Hand          int
+	Betting       Betting
+	Self		  Self
+}
+
+type Betting struct {
+	Call     int
+	Raise    int
+	CanRaise bool
+}
+
+type Self struct {
+	Name	string
+	Blind	int
+	Ante	int
+	Wagered int
+	State	string
+	Chips 	int
+	Actions [] *Action
+	Cards 	[] *string
+	Position int
+	Brain   [] *string
+}
+
+type Action struct {
+	// "actions": { "pre-flop": [ { "type": "call", "bet": 5 } ] },
+}
+
+func main() {
+	http.HandleFunc("/", handler)
+	http.ListenAndServe("0.0.0.0:8081", nil)
+}
+
+
 func handler(w http.ResponseWriter, r *http.Request) {
+	var game Game
+	var ret int
+
+	fmt.Printf("Method: %s\n", r.Method);
+
+	json.NewDecoder(r.Body).Decode(&game)
+
+//	err := json.NewDecoder(r.Body).Decode(&game)
+//	if err != nil {
+//		panic("argh")
+//	}
+	Display(&game)
+
+	if r.Method == "GET" {
+		fmt.Fprintf(w, "{\"info\": { \"name\": \"GOd of Gamblers\" } }")
+	} else {
+		if game.Betting.CanRaise {
+			ret = rand.Intn(2) * game.Betting.Raise
+		} else {
+			ret = game.Betting.Call
+		}
+		fmt.Fprintf(w, "%d", ret)
+	}
+}
+
+
+
+
+// example read JSON from file
+func decodeFromFile() {
+	var game Game
+	file, err := os.Open(dataFile)
+	if err != nil {
+		// return nil, err
+		fmt.Println("Error:", err)
+	}
+	err = json.NewDecoder(file).Decode(&game)
+
+	defer file.Close()
+
+	Display(&game)
+}
+
+func Display (game *Game) {
+	fmt.Printf("community: ")
+	for _,card := range game.Community {
+		fmt.Printf("%s,", *card)
+	}
+	fmt.Printf("\nstate: %s\nhand: %d", game.State, game.Hand)
+	fmt.Printf("\nbetting: %d, %d, %t", game.Betting.Call, game.Betting.Raise, game.Betting.CanRaise)
+	fmt.Printf("\nself: %s, %d, %d, %d, %s", game.Self.Name, game.Self.Blind, game.Self.Ante, game.Self.Wagered, game.Self.State)
+}
+
+// https://golang.org/doc/articles/wiki/
+func basicHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
 }
 
@@ -17,12 +115,6 @@ func playHandler(w http.ResponseWriter, r *http.Request) {
 	h2 := hand.New(deck.PopMulti(5))
 	winner := FindWinner(h1, h2)
 	fmt.Fprintf(w,"Winner is: %s", winner)
-}
-
-func main() {
-	http.HandleFunc("/", handler)
-	http.HandleFunc("/play/", playHandler)
-	http.ListenAndServe(":8080", nil)
 }
 
 // not used
