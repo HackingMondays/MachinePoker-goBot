@@ -24,11 +24,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("Method: %s\n", r.Method);
 
 	json.NewDecoder(r.Body).Decode(&game)
-
-//	err := json.NewDecoder(r.Body).Decode(&game)
-//	if err != nil {
-//		panic("argh")
-//	}
 	Display(&game)
 
 	if r.Method == "GET" {
@@ -42,9 +37,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "%d", ret)
 	}
 }
-
-
-
 
 // example read JSON from file
 func decodeFromFile() {

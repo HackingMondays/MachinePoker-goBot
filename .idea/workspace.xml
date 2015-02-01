@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8491ec9-13f6-4736-b9bb-ed03fedae988" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/game.go" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/game_test.go" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game.go" afterPath="$PROJECT_DIR$/game.go" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game_test.go" afterPath="$PROJECT_DIR$/game_test.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/randomhands.go" afterPath="$PROJECT_DIR$/randomhands.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -34,8 +34,8 @@
       <file leaf-file-name="randomhands.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/randomhands.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="720" max-vertical-offset="1485">
-              <caret line="61" column="1" selection-start-line="61" selection-start-column="1" selection-end-line="61" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="1365">
+              <caret line="25" column="41" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -44,8 +44,8 @@
       <file leaf-file-name="game.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/game.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="930">
-              <caret line="47" column="29" selection-start-line="47" selection-start-column="29" selection-end-line="47" selection-end-column="29" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="930">
+              <caret line="40" column="6" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -54,8 +54,8 @@
       <file leaf-file-name="game_test.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/game_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.40462428" vertical-offset="0" max-vertical-offset="525">
-              <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.7803468" vertical-offset="0" max-vertical-offset="519">
+              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -839,14 +839,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/randomhands.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="720" max-vertical-offset="1485">
-          <caret line="61" column="1" selection-start-line="61" selection-start-column="1" selection-end-line="61" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/go/src/os/file_unix.go">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.0452962" vertical-offset="0" max-vertical-offset="5175">
@@ -863,18 +855,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/randomhands.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="1365">
+          <caret line="25" column="41" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/game.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="930">
-          <caret line="47" column="29" selection-start-line="47" selection-start-column="29" selection-end-line="47" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="930">
+          <caret line="40" column="6" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/game_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40462428" vertical-offset="0" max-vertical-offset="525">
-          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.7803468" vertical-offset="0" max-vertical-offset="519">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding />
         </state>
       </provider>

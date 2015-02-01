@@ -38,15 +38,15 @@ type Action struct {
 	// "actions": { "pre-flop": [ { "type": "call", "bet": 5 } ] },
 }
 
-func readGame(reader io.Reader) Game {
-	var game Game
+func ReadGame(reader io.Reader) *Game {
+	var game *Game
 	json.NewDecoder(reader).Decode(&game)
 	return game
 }
 
 func Display (game *Game) {
 	fmt.Printf("community: ")
-	for _,card := range game.Community {
+	for _, card := range game.Community {
 		fmt.Printf("%s,", *card)
 	}
 	fmt.Printf("\nstate: %s\nhand: %d", game.State, game.Hand)
