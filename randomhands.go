@@ -9,42 +9,10 @@ import (
 	"math/rand"
 )
 
-const dataFile = "data/data.json"
-
-
-type Game struct {
-	Community [] *string
-	State     	  string
-	Hand          int
-	Betting       Betting
-	Self		  Self
-}
-
-type Betting struct {
-	Call     int
-	Raise    int
-	CanRaise bool
-}
-
-type Self struct {
-	Name	string
-	Blind	int
-	Ante	int
-	Wagered int
-	State	string
-	Chips 	int
-	Actions [] *Action
-	Cards 	[] *string
-	Position int
-	Brain   [] *string
-}
-
-type Action struct {
-	// "actions": { "pre-flop": [ { "type": "call", "bet": 5 } ] },
-}
 
 func main() {
 	http.HandleFunc("/", handler)
+	// http.ListenAndServe(":8081", nil)
 	http.ListenAndServe("0.0.0.0:8081", nil)
 }
 
@@ -91,16 +59,6 @@ func decodeFromFile() {
 	defer file.Close()
 
 	Display(&game)
-}
-
-func Display (game *Game) {
-	fmt.Printf("community: ")
-	for _,card := range game.Community {
-		fmt.Printf("%s,", *card)
-	}
-	fmt.Printf("\nstate: %s\nhand: %d", game.State, game.Hand)
-	fmt.Printf("\nbetting: %d, %d, %t", game.Betting.Call, game.Betting.Raise, game.Betting.CanRaise)
-	fmt.Printf("\nself: %s, %d, %d, %d, %s", game.Self.Name, game.Self.Blind, game.Self.Ante, game.Self.Wagered, game.Self.State)
 }
 
 // https://golang.org/doc/articles/wiki/

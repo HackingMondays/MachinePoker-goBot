@@ -78,3 +78,26 @@ File, Project Structure, Platform Settings, SDKs
         `/usr/local/go/src`
         `/Users/daniel/src/go/src`
 
+
+Server
+------
+Install:
+~~~
+cd MachinePoker
+sudo npm install -g coffee-script
+sudo npm install -g bower
+cd src/public/
+bower install
+~~~
+
+
+go to MachinePoker and run start.sh
+
+Server:
+http://localhost:8080/
+
+Graphical view (requires Flash)
+http://localhost:8080/playViewer.html
+
+
+
