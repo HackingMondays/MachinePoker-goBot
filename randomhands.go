@@ -3,10 +3,9 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"github.com/loganjspears/joker/hand"
 	"math/rand"
+	"github.com/loganjspears/joker/hand"
 )
-
 
 func main() {
 	http.HandleFunc("/", nameHandler)
@@ -19,18 +18,15 @@ func nameHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func botHandler(w http.ResponseWriter, r *http.Request) {
-	var game Game
-
-	ReadGame(r.Body)
-	Display(&game)
+	game := ReadGame(r.Body)
+	Display(game)
 
 	if game.State != "complete" {
-		fmt.Fprintf(w, "%d", bet(&game))
+		fmt.Fprintf(w, "%d", play(game))
 	}
 }
 
-// our code...
-func bet(game *Game) int {
+func play(game *Game) int {
 	var ret int
 	myCards := Cards(game.Self.Cards)
 
