@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="GO_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/bin" />
+    <output-test url="file://$MODULE_DIR$/bin" />
     <exclude-output />
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Go SDK go1.4.1 darwin/amd64" jdkType="Google Go SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="GOPATH &lt;gog&gt;" level="project" />
   </component>
 </module>
