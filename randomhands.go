@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"encoding/json"
 	"net/http"
 	"github.com/loganjspears/joker/hand"
 	"math/rand"
@@ -11,75 +9,124 @@ import (
 
 
 func main() {
-	http.HandleFunc("/", handler)
-	// http.ListenAndServe(":8081", nil)
+	http.HandleFunc("/", nameHandler)
+	http.HandleFunc("/bot", botHandler)
 	http.ListenAndServe("0.0.0.0:8081", nil)
 }
 
+func nameHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "{\"info\": { \"name\": \"GOd of Gamblers\" } }")
+}
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func botHandler(w http.ResponseWriter, r *http.Request) {
 	var game Game
+
+	ReadGame(r.Body)
+	Display(&game)
+
+	if game.State != "complete" {
+		fmt.Fprintf(w, "%d", bet(&game))
+	}
+}
+
+// our code...
+func bet(game *Game) int {
 	var ret int
+	myCards := Cards(game.Self.Cards)
 
-	fmt.Printf("Method: %s\n", r.Method);
+	if game.State == "pre-flop" {
+		myHand := hand.New(myCards)
 
-	json.NewDecoder(r.Body).Decode(&game)
-	Display(&game)
-
-	if r.Method == "GET" {
-		fmt.Fprintf(w, "{\"info\": { \"name\": \"GOd of Gamblers\" } }")
-	} else {
-		if game.Betting.CanRaise {
-			ret = rand.Intn(2) * game.Betting.Raise
+		// bet on first hand
+		if myHand.Ranking() >= hand.Pair {
+			ret = raise(game)
 		} else {
-			ret = game.Betting.Call
+			ret = rand.Intn(2) * game.Betting.Call
 		}
-		fmt.Fprintf(w, "%d", ret)
+	} else {
+		// in flop, append community cards
+		for _, s := range game.Community {
+			myCards = append(myCards, card(*s))
+		}
+		myHand := hand.New(myCards)
+
+		// bet on new hand
+		if myHand.Ranking() >= hand.Flush {
+			ret = raise(game)
+		} else {
+			ret = rand.Intn(2) * game.Betting.Call
+		}
+		ret = raise(game)
+	}
+	return ret
+}
+
+func raise(game *Game) int {
+	if game.Betting.CanRaise {
+		return game.Betting.Raise
+	} else {
+		return game.Betting.Call
 	}
 }
 
-// example read JSON from file
-func decodeFromFile() {
-	var game Game
-	file, err := os.Open(dataFile)
-	if err != nil {
-		// return nil, err
-		fmt.Println("Error:", err)
+
+// ----------------------------------------
+
+// copied from jokertest.go
+func Cards(list []*string) []*hand.Card {
+	cards := []*hand.Card{}
+	for _, s := range list {
+		cards = append(cards, card(*s))
 	}
-	err = json.NewDecoder(file).Decode(&game)
-
-	defer file.Close()
-
-	Display(&game)
+	return cards
 }
 
-// https://golang.org/doc/articles/wiki/
-func basicHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
+func card(s string) *hand.Card {
+	if len(s) != 2 {
+		panic("jokertest: card string must be two characters")
+	}
+
+	rank, ok := rankMap[s[:1]]
+	if !ok {
+		panic("jokertest: rank not found")
+	}
+
+	suit, ok := suitMap[s[1:]]
+	if !ok {
+		panic("jokertest: suit not found")
+	}
+
+	for _, c := range hand.Cards() {
+		if rank == c.Rank() && suit == c.Suit() {
+			return c
+		}
+	}
+	panic("jokertest: card not found")
 }
 
-// same as Play() but write to ResponseWriter
-func playHandler(w http.ResponseWriter, r *http.Request) {
-	deck := hand.NewDealer().Deck()
-	h1 := hand.New(deck.PopMulti(5))
-	h2 := hand.New(deck.PopMulti(5))
-	winner := FindWinner(h1, h2)
-	fmt.Fprintf(w,"Winner is: %s", winner)
+var (
+	rankMap = map[string]hand.Rank{
+	"A": hand.Ace,
+	"K": hand.King,
+	"Q": hand.Queen,
+	"J": hand.Jack,
+	"T": hand.Ten,
+	"9": hand.Nine,
+	"8": hand.Eight,
+	"7": hand.Seven,
+	"6": hand.Six,
+	"5": hand.Five,
+	"4": hand.Four,
+	"3": hand.Three,
+	"2": hand.Two,
 }
 
-// not used
-func Play() {
-	deck := hand.NewDealer().Deck()
-	h1 := hand.New(deck.PopMulti(5))
-	h2 := hand.New(deck.PopMulti(5))
-	winner := FindWinner(h1, h2)
-	fmt.Println("Winner is:", winner)
+	suitMap = map[string]hand.Suit{
+	"s": hand.Spades,
+	"h": hand.Hearts,
+	"d": hand.Diamonds,
+	"c": hand.Clubs,
 }
+)
 
-func FindWinner(h1 *hand.Hand, h2 *hand.Hand) []*hand.Card {
-	fmt.Println(h1)
-	fmt.Println(h2)
-	hands := hand.Sort(hand.SortingHigh, hand.DESC, h1, h2)
-	return hands[0].Cards()
-}
 

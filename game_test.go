@@ -4,6 +4,8 @@ import (
 	"testing"
 	"os"
 	"log"
+	"fmt"
+	"github.com/loganjspears/joker/jokertest"
 )
 
 const dataFile = "data/data.json"
@@ -25,3 +27,16 @@ func TestReadGame(t *testing.T) {
 	Display(game)
 }
 
+//func TestCard2Joker(t *testing.T) {
+//	fixture := [...]string { "2c", "Qh", "Jc" }
+//	expectd := [...]string { "2♣", "Q♥", "J♣" }
+//
+//	for _, fix := range fixture {
+//		fmt.Println(Card2Joker(fix))
+//	}
+//}
+
+func TestCard2Joker(t *testing.T) {
+	h1 := jokertest.Cards("2c", "Qh", "Jc")
+	fmt.Println(h1)
+}
