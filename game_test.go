@@ -54,3 +54,4 @@ func TestAppend(t *testing.T) {
         t.Error("len(all)=", len(all))
     }
 }
+

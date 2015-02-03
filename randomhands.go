@@ -33,20 +33,27 @@ func botHandler(w http.ResponseWriter, r *http.Request) {
 
 func play(game *Game) int {
 	var ret int
+
+    // consider all cards to calculate odds
     all := append(game.Community, game.Self.Cards...)
 	myCards := Cards(all)
+
+    // convert to joker hand and calculate ranking
     myHand := hand.New(myCards)
+    fmt.Println("\n** Hand: ")
+    fmt.Println(myHand)
+
+    // TODO: ranking is currently wrong, needs calc ?
     fmt.Printf("ranking: %s\n", myHand.Ranking())
 
+    // strategy
 	if game.State == "pre-flop" {
-		// bet on first hand
 		if myHand.Ranking() == hand.Pair {
 			ret = raise(game)
 		} else {
 			ret = rand.Intn(2) * game.Betting.Call
 		}
 	} else {
-        // bet on new hand
         if myHand.Ranking() >= hand.Flush {
             ret = raise(game)
         } else if myHand.Ranking() == hand.Pair {
