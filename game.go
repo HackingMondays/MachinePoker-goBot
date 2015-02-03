@@ -47,6 +47,7 @@ func ReadGame(reader io.Reader) *Game {
 }
 
 func Display (game *Game) {
+    fmt.Println("\n--- game -------------")
 	fmt.Printf("community: ")
 	for _, community := range game.Community {
 		fmt.Printf("%s,", *community)
@@ -60,7 +61,7 @@ func Display (game *Game) {
 	}
 	fmt.Printf("\ncards: ")
 	for _, card := range game.Self.Cards {
-		fmt.Printf("%s,", *card)
+		fmt.Printf("%s, ", *card)
 	}
 }
 

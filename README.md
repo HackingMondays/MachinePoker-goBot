@@ -45,8 +45,9 @@ Edit project file and add:
 
 
 ### IdeaJ
+https://github.com/go-lang-plugin-org/go-lang-idea-plugin/releases
 
-Install Go Plugin 0.9.15.3:
+Install Go Plugin 1.0.0.alpha#11:
     Preferences, Plugins, Browse, search for `golang`, Install, Restart
 
 Create New Project (from Welcome screen)
@@ -57,10 +58,8 @@ Create New Project (from Welcome screen)
 
 Run, Edit configurations...
     +, Go Application
-    Name: `gog`
-    Script: `/Users/daniel/src/hacking/poker/gog/randomhands.go`
-    Working directory: `/Users/daniel/src/hacking/poker/gog`
-    [x] Build before run, Output directory: `/Users/daniel/src/hacking/poker/gog/bin`
+    Name: `gog-app`
+    File: `/Users/daniel/src/hacking/poker/gog/randomhands.go`
 
 Fix warnings:
 https://github.com/go-lang-plugin-org/go-lang-idea-plugin/issues/318#issuecomment-31303939
@@ -72,11 +71,14 @@ Restart IdeaJ
 
 Fix auto-completion:
 https://github.com/go-lang-plugin-org/go-lang-idea-plugin/issues/1146
+
 File, Project Structure, Platform Settings, SDKs
     - add Go SDK (Go SDK go1.4.1 darwin/amd64 in /usr/local/go)
     - add in SourcePath tab:
         `/usr/local/go/src`
         `/Users/daniel/src/go/src`
+
+File, Project Structure, Modules, Sources -> check sources marked in blue
 
 
 Server

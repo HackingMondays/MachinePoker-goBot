@@ -2,28 +2,33 @@ package main
 
 import (
 	"fmt"
+    "log"
 	"net/http"
 	"math/rand"
 	"github.com/loganjspears/joker/hand"
 )
 
 func main() {
-	http.HandleFunc("/", nameHandler)
-	http.HandleFunc("/bot", botHandler)
+	http.HandleFunc("/bot/gog", botHandler)
 	http.ListenAndServe("0.0.0.0:8081", nil)
 }
 
-func nameHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "{\"info\": { \"name\": \"GOd of Gamblers\" } }")
-}
-
 func botHandler(w http.ResponseWriter, r *http.Request) {
-	game := ReadGame(r.Body)
-	Display(game)
+    switch r.Method {
+        case "GET":
+            fmt.Fprintf(w, "{\"info\": { \"name\": \"GOd of Gamblers\" } }")
+        case "POST":
+            game := ReadGame(r.Body)
+            Display(game)
 
-	if game.State != "complete" {
-		fmt.Fprintf(w, "%d", play(game))
-	}
+            var bet int
+            if game.State != "complete" {
+                bet = play(game)
+            }
+            fmt.Fprintf(w, "%d", bet)
+        default:
+            log.Fatal("Method unsupported")
+    }
 }
 
 func play(game *Game) int {
@@ -32,32 +37,34 @@ func play(game *Game) int {
 
 	if game.State == "pre-flop" {
 		myHand := hand.New(myCards)
+        fmt.Printf("pf-ranking: %s\n", myHand.Ranking())
 
 		// bet on first hand
-		if myHand.Ranking() >= hand.Pair {
+		if myHand.Ranking() == hand.Pair {
 			ret = raise(game)
 		} else {
 			ret = rand.Intn(2) * game.Betting.Call
 		}
 	} else {
-		// in flop, append community cards
-		for _, s := range game.Community {
-			myCards = append(myCards, card(*s))
-		}
-		myHand := hand.New(myCards)
+        // in flop, append community cards
+        for _, s := range game.Community {
+            myCards = append(myCards, card(*s))
+        }
+        myHand := hand.New(myCards)
+        fmt.Printf("ranking: %s\n", myHand.Ranking())
 
-		// bet on new hand
-		if myHand.Ranking() >= hand.Flush {
-			ret = raise(game)
-		} else {
-			ret = rand.Intn(2) * game.Betting.Call
-		}
-		ret = raise(game)
+        // bet on new hand
+        if myHand.Ranking() >= hand.Flush {
+            ret = raise(game)
+        } else if myHand.Ranking() == hand.Pair {
+            ret = game.Betting.Call
+        }
 	}
 	return ret
 }
 
 func raise(game *Game) int {
+    fmt.Println("raising")
 	if game.Betting.CanRaise {
 		return game.Betting.Raise
 	} else {
@@ -101,7 +108,7 @@ func card(s string) *hand.Card {
 }
 
 var (
-	rankMap = map[string]hand.Rank{
+	rankMap = map[string] hand.Rank {
 	"A": hand.Ace,
 	"K": hand.King,
 	"Q": hand.Queen,
@@ -115,14 +122,14 @@ var (
 	"4": hand.Four,
 	"3": hand.Three,
 	"2": hand.Two,
-}
+    }
 
-	suitMap = map[string]hand.Suit{
+	suitMap = map[string] hand.Suit {
 	"s": hand.Spades,
 	"h": hand.Hearts,
 	"d": hand.Diamonds,
 	"c": hand.Clubs,
-}
+    }
 )
 
 
