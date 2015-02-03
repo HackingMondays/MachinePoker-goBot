@@ -9,11 +9,11 @@ import (
 )
 
 type Game struct {
-	Community [] *string
-	State     	  string
-	Hand          int
-	Betting       Betting
-	Self		  Self
+	Community [] string
+	State     	 string
+	Hand         int
+	Betting      Betting
+	Self    	 Self
 }
 
 type Betting struct {
@@ -30,7 +30,7 @@ type Self struct {
 	State	string
 	Chips 	int
 	Actions map[string] [] *Action
-	Cards 	[] *string
+	Cards 	[]  string
 	Position int
 	Brain   [] *string
 }
@@ -50,18 +50,18 @@ func Display (game *Game) {
     fmt.Println("\n--- game -------------")
 	fmt.Printf("community: ")
 	for _, community := range game.Community {
-		fmt.Printf("%s,", *community)
+		fmt.Printf("%s, ", community)
 	}
+    fmt.Printf("\ncards: ")
+    for _, card := range game.Self.Cards {
+        fmt.Printf("%s, ", card)
+    }
 	fmt.Printf("\nstate: %s\nhand: %d", game.State, game.Hand)
 	fmt.Printf("\nbetting: %d, %d, %t", game.Betting.Call, game.Betting.Raise, game.Betting.CanRaise)
 	fmt.Printf("\nself: %s, %d, %d, %d, %s", game.Self.Name, game.Self.Blind, game.Self.Ante, game.Self.Wagered, game.Self.State)
 	fmt.Printf("\nactions: ")
 	for _, action := range game.Self.Actions["pre-flop"] {
 		fmt.Printf("\ttype: %s, bet: %d", action.Type, action.Bet)
-	}
-	fmt.Printf("\ncards: ")
-	for _, card := range game.Self.Cards {
-		fmt.Printf("%s, ", *card)
 	}
 }
 

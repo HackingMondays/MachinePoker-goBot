@@ -33,12 +33,12 @@ func botHandler(w http.ResponseWriter, r *http.Request) {
 
 func play(game *Game) int {
 	var ret int
-	myCards := Cards(game.Self.Cards)
+    all := append(game.Community, game.Self.Cards...)
+	myCards := Cards(all)
+    myHand := hand.New(myCards)
+    fmt.Printf("ranking: %s\n", myHand.Ranking())
 
 	if game.State == "pre-flop" {
-		myHand := hand.New(myCards)
-        fmt.Printf("pf-ranking: %s\n", myHand.Ranking())
-
 		// bet on first hand
 		if myHand.Ranking() == hand.Pair {
 			ret = raise(game)
@@ -46,13 +46,6 @@ func play(game *Game) int {
 			ret = rand.Intn(2) * game.Betting.Call
 		}
 	} else {
-        // in flop, append community cards
-        for _, s := range game.Community {
-            myCards = append(myCards, card(*s))
-        }
-        myHand := hand.New(myCards)
-        fmt.Printf("ranking: %s\n", myHand.Ranking())
-
         // bet on new hand
         if myHand.Ranking() >= hand.Flush {
             ret = raise(game)
@@ -76,10 +69,10 @@ func raise(game *Game) int {
 // ----------------------------------------
 
 // copied from jokertest.go
-func Cards(list []*string) []*hand.Card {
+func Cards(list []string) []*hand.Card {
 	cards := []*hand.Card{}
 	for _, s := range list {
-		cards = append(cards, card(*s))
+		cards = append(cards, card(s))
 	}
 	return cards
 }

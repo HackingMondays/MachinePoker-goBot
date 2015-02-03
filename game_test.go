@@ -25,6 +25,7 @@ func TestReadGame(t *testing.T) {
 	var game *Game
 	game = ReadGameFromFile(dataFile)
 	Display(game)
+    fmt.Println()
 }
 
 //func TestCard2Joker(t *testing.T) {
@@ -39,4 +40,17 @@ func TestReadGame(t *testing.T) {
 func TestCard2Joker(t *testing.T) {
 	h1 := jokertest.Cards("2c", "Qh", "Jc")
 	fmt.Println(h1)
+    fmt.Println()
+}
+
+func TestAppend(t *testing.T) {
+    s1 := []string{"test", "test1"}
+    s2 := []string{"test2", "test3"}
+    all := append(s1, s2...)
+
+    fmt.Println(all)
+
+    if len(all) != 4 {
+        t.Error("len(all)=", len(all))
+    }
 }
