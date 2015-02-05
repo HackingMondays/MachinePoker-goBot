@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"io"
 	"encoding/json"
-	"strings"
-	"github.com/loganjspears/joker/hand"
 )
 
 type Game struct {
@@ -14,6 +12,7 @@ type Game struct {
 	Hand         int
 	Betting      Betting
 	Self    	 Self
+    Players []   Player
 }
 
 type Betting struct {
@@ -32,12 +31,22 @@ type Self struct {
 	Actions map[string] [] *Action
 	Cards 	[]  string
 	Position int
-	Brain   [] *string
+	Brain   [] string
 }
 
 type Action struct {
 	Type	string
 	Bet 	int
+}
+
+type Player struct {
+    Name	string
+    Blind	int
+    Ante	int
+    Wagered int
+    State	string
+    Chips 	int
+    Actions map[string] [] *Action
 }
 
 func ReadGame(reader io.Reader) *Game {
@@ -46,39 +55,53 @@ func ReadGame(reader io.Reader) *Game {
 	return game
 }
 
-func Display (game *Game) {
+func DisplayGame(game *Game) {
     fmt.Println("\n--- game -------------")
-	fmt.Printf("community: ")
-	for _, community := range game.Community {
-		fmt.Printf("%s, ", community)
-	}
-    fmt.Printf("\ncards: ")
-    for _, card := range game.Self.Cards {
-        fmt.Printf("%s, ", card)
-    }
-	fmt.Printf("\nstate: %s\nhand: %d", game.State, game.Hand)
-	fmt.Printf("\nbetting: %d, %d, %t", game.Betting.Call, game.Betting.Raise, game.Betting.CanRaise)
-	fmt.Printf("\nself: %s, %d, %d, %d, %s", game.Self.Name, game.Self.Blind, game.Self.Ante, game.Self.Wagered, game.Self.State)
-	fmt.Printf("\nactions: ")
-	for _, action := range game.Self.Actions["pre-flop"] {
-		fmt.Printf("\ttype: %s, bet: %d", action.Type, action.Bet)
-	}
+    DisplayCards("community", game.Community)
+    DisplayCards("cards", game.Self.Cards)
+	fmt.Printf("state: %s\nhand: %d\n", game.State, game.Hand)
+	fmt.Printf("betting: %d, %d, %t\n", game.Betting.Call, game.Betting.Raise, game.Betting.CanRaise)
+    DisplaySelf(&game.Self)
+    DisplayPlayers(game.Players)
 }
 
+func DisplayCards(label string, cards []string) {
+    fmt.Printf("%s: ", label)
+    for _, card := range cards {
+        fmt.Printf("%s, ", card)
+    }
+    fmt.Println()
+}
 
+func DisplaySelf(self *Self) {
+    fmt.Println("self: ")
+    fmt.Printf("  name: %s, blind: %d, ante: %d, wagered: %d, state: %s, chips: %d\n",
+        self.Name, self.Blind, self.Ante, self.Wagered, self.State, self.Chips)
+    DisplayActions(self.Actions)
+}
 
-// convert JSPoker cards to Joker cards
-// https://github.com/loganjspears/joker/blob/master/hand/card.go
-func Card2Joker(mycard string) *hand.Card {
+func DisplayActions(actionMap map[string] [] *Action) {
+    fmt.Println("  actions:")
+    for key, actions := range actionMap {
+        fmt.Printf("    state: %s\n", key)
+        for _, action := range actions {
+            fmt.Printf("      type: %s, bet: %d\n", action.Type, action.Bet)
+        }
+    }
+}
 
-	var joker string = mycard
-	source := 	   [4]string {"s","h","d","c"}
-	destination := [4]string {"♠","♥","♦","♣"}
+func DisplayPlayers(players [] Player) {
+    fmt.Println("players:")
+    for _, player := range players {
+        if player.Name != "Me" {
+            DisplayPlayer(player)
+        }
+    }
+    fmt.Println()
+}
 
-	for i := 0; i < 4; i++ {
-		joker = strings.Replace(joker, source[i], destination[i], 1)
-	}
-	cr := hand.AceSpades
-	cr.UnmarshalText([]byte(joker))
-	return cr
+func DisplayPlayer(player Player) {
+    fmt.Printf("  name: %s, blind: %d, ante: %d, wagered: %d, state: %s, chips: %d\n",
+    player.Name, player.Blind, player.Ante, player.Wagered, player.State, player.Chips)
+    DisplayActions(player.Actions)
 }

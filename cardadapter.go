@@ -5,7 +5,7 @@ import (
 )
 
 // converts js-poker cards to joker cards
-// (mostly copied from jokertest.go)
+// mostly copied from jokertest.go
 
 func Cards(list []string) []*hand.Card {
     cards := []*hand.Card{}

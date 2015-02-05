@@ -19,7 +19,7 @@ func botHandler(w http.ResponseWriter, r *http.Request) {
             fmt.Fprintf(w, "{\"info\": { \"name\": \"GOd of Gamblers\" } }")
         case "POST":
             game := ReadGame(r.Body)
-            Display(game)
+            DisplayGame(game)
 
             var bet int
             if game.State != "complete" {
