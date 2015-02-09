@@ -4,7 +4,6 @@ import (
 	"fmt"
     "log"
 	"net/http"
-	"math/rand"
 	"github.com/loganjspears/joker/hand"
 )
 
@@ -34,41 +33,53 @@ func botHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func play(game *Game) int {
-	var ret int
 
-    // consider all cards to calculate odds
+    // consider all cards when calculating odds
     all := append(game.Community, game.Self.Cards...)
 	myCards := Cards(all)
 
     // convert to joker hand and calculate ranking
     myHand := hand.New(myCards)
-    fmt.Println("\n** Hand: ")
-    fmt.Println(myHand)
+    fmt.Println("** myHand:", myHand)
 
-    // TODO: printed value of rank is wrong, subract 1
-    fmt.Printf("ranking: %s\n", myHand.Ranking()-1)
+    // TODO: printed value of rank is wrong, subtract 1
+    // fmt.Printf("ranking: %s\n", myHand.Ranking()-1)
 
-    // strategy
-	if game.State == "pre-flop" {
-		if myHand.Ranking() == hand.Pair {
-			ret = raise(game)
-		} else {
-			ret = rand.Intn(2) * game.Betting.Call
-            fmt.Println("-> returning:", ret)
-		}
-	} else {
-        if myHand.Ranking() >= hand.ThreeOfAKind {
-            ret = raise(game)
-        } else if myHand.Ranking() == hand.Pair {
-            fmt.Println("-> calling:", game.Betting.Call)
-            ret = game.Betting.Call
-        }
-	}
-	return ret
+    switch game.State {
+        case "pre-flop":
+            return calculatePreflopBet(game, myHand)
+        case "flop":
+            return calculateBet(game, myHand)
+        case "turn":
+            return calculateBet(game, myHand)
+        case "river":
+            return calculateBet(game, myHand)
+    }
+    log.Panic("Undefined game state:", game.State)
+    return -1;
+}
+
+func calculatePreflopBet(game *Game, myHand *hand.Hand) int {
+    if myHand.Ranking() == hand.Pair {
+        return raise(game)
+    } else {
+        fmt.Println("-> calling:", game.Betting.Call)
+        return game.Betting.Call
+    }
+}
+
+func calculateBet(game *Game, myHand *hand.Hand) int {
+    if myHand.Ranking() >= hand.TwoPair {
+        return raise(game)
+    } else if myHand.Ranking() >= hand.Pair || game.Self.Wagered > 30 {
+        fmt.Println("-> calling:", game.Betting.Call)
+        return game.Betting.Call
+    }
+    fmt.Println("-> folding")
+    return 0
 }
 
 func raise(game *Game) int {
-    fmt.Println("-> canRaise:", game.Betting.CanRaise)
 	if game.Betting.CanRaise {
         fmt.Println("-> raising:", game.Betting.Raise)
 		return game.Betting.Raise
