@@ -27,7 +27,7 @@ func botHandler(w http.ResponseWriter, r *http.Request) {
             if game.State != "complete" {
                 bet = play(game)
             }
-            fmt.Fprintf(w, "%d", bet)
+            fmt.Fprintf(w, "{\"bet\": \"%d\"}", bet)
         default:
             log.Fatal("Method unsupported")
     }
@@ -35,8 +35,6 @@ func botHandler(w http.ResponseWriter, r *http.Request) {
 
 func play(game *Game) int {
 	var ret int
-
-    DisplayGame(game)
 
     // consider all cards to calculate odds
     all := append(game.Community, game.Self.Cards...)
@@ -56,11 +54,13 @@ func play(game *Game) int {
 			ret = raise(game)
 		} else {
 			ret = rand.Intn(2) * game.Betting.Call
+            fmt.Println("-> returning:", ret)
 		}
 	} else {
         if myHand.Ranking() >= hand.ThreeOfAKind {
             ret = raise(game)
         } else if myHand.Ranking() == hand.Pair {
+            fmt.Println("-> calling:", game.Betting.Call)
             ret = game.Betting.Call
         }
 	}
@@ -68,10 +68,12 @@ func play(game *Game) int {
 }
 
 func raise(game *Game) int {
-    fmt.Println("raising")
+    fmt.Println("-> canRaise:", game.Betting.CanRaise)
 	if game.Betting.CanRaise {
+        fmt.Println("-> raising:", game.Betting.Raise)
 		return game.Betting.Raise
 	} else {
+        fmt.Println("-> calling:", game.Betting.Call)
 		return game.Betting.Call
 	}
 }

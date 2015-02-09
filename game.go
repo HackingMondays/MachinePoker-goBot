@@ -60,7 +60,7 @@ func DisplayGame(game *Game) {
     DisplayCards("community", game.Community)
     DisplayCards("cards", game.Self.Cards)
 	fmt.Printf("state: %s\nhand: %d\n", game.State, game.Hand)
-	fmt.Printf("betting: %d, %d, %t\n", game.Betting.Call, game.Betting.Raise, game.Betting.CanRaise)
+	fmt.Printf("betting: call=%d, raise=%d, canRaise=%t\n", game.Betting.Call, game.Betting.Raise, game.Betting.CanRaise)
     DisplaySelf(&game.Self)
     DisplayPlayers(game.Players)
 }
