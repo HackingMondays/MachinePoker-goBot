@@ -28,7 +28,7 @@ func botHandler(w http.ResponseWriter, r *http.Request) {
             }
             fmt.Fprintf(w, "{\"bet\": \"%d\"}", bet)
         default:
-            log.Fatal("Method unsupported")
+            log.Fatal("Method unsupported:", r.Method)
     }
 }
 
@@ -54,37 +54,44 @@ func play(game *Game) int {
             return calculateBet(game, myHand)
         case "river":
             return calculateBet(game, myHand)
+        default:
+            log.Fatal("Undefined game state:", game.State)
+            return -1;
     }
-    log.Panic("Undefined game state:", game.State)
-    return -1;
 }
 
 func calculatePreflopBet(game *Game, myHand *hand.Hand) int {
     if myHand.Ranking() == hand.Pair {
-        return raise(game)
+        return raiseOrCall(game)
     } else {
-        fmt.Println("-> calling:", game.Betting.Call)
-        return game.Betting.Call
+        return call(game)
     }
 }
 
 func calculateBet(game *Game, myHand *hand.Hand) int {
     if myHand.Ranking() >= hand.TwoPair {
-        return raise(game)
+        return raiseOrCall(game)
     } else if myHand.Ranking() >= hand.Pair || game.Self.Wagered > 30 {
-        fmt.Println("-> calling:", game.Betting.Call)
-        return game.Betting.Call
+        return call(game)
     }
-    fmt.Println("-> folding")
-    return 0
+    return fold(game)
 }
 
-func raise(game *Game) int {
+func raiseOrCall(game *Game) int {
 	if game.Betting.CanRaise {
         fmt.Println("-> raising:", game.Betting.Raise)
 		return game.Betting.Raise
 	} else {
-        fmt.Println("-> calling:", game.Betting.Call)
-		return game.Betting.Call
+		return call(game)
 	}
+}
+
+func call (game *Game) int {
+    fmt.Println("-> calling:", game.Betting.Call)
+    return game.Betting.Call
+}
+
+func fold (game *Game) int {
+    fmt.Println("-> folding")
+    return 0
 }
