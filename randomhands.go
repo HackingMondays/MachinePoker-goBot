@@ -8,6 +8,8 @@ import (
 	"github.com/loganjspears/joker/hand"
 )
 
+var BotName = "GOd of Gamblers"
+
 func main() {
 	http.HandleFunc("/bot/gog", botHandler)
 	http.ListenAndServe("0.0.0.0:8081", nil)
@@ -16,7 +18,7 @@ func main() {
 func botHandler(w http.ResponseWriter, r *http.Request) {
     switch r.Method {
         case "GET":
-            fmt.Fprintf(w, "{\"info\": { \"name\": \"GOd of Gamblers\" } }")
+            fmt.Fprintf(w, "{\"info\": { \"name\": \"%s\" } }", BotName)
         case "POST":
             game := ReadGame(r.Body)
             DisplayGame(game)
@@ -33,6 +35,8 @@ func botHandler(w http.ResponseWriter, r *http.Request) {
 
 func play(game *Game) int {
 	var ret int
+
+    DisplayGame(game)
 
     // consider all cards to calculate odds
     all := append(game.Community, game.Self.Cards...)

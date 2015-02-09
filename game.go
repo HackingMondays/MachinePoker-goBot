@@ -93,7 +93,7 @@ func DisplayActions(actionMap map[string] [] *Action) {
 func DisplayPlayers(players [] Player) {
     fmt.Println("players:")
     for _, player := range players {
-        if player.Name != "Me" {
+        if player.Name != BotName {
             DisplayPlayer(player)
         }
     }
