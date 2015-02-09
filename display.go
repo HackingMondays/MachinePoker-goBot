@@ -1,6 +1,7 @@
 package main
 
-// Utility function to display a game object
+// Utility function to dump a game object to the console
+// Requires an instance of *log.Logger (cf. logger.go)
 func DisplayGame(game *Game) {
 	logger.Println("\n--- game -------------")
 	DisplayCards("community", game.Community)

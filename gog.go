@@ -8,18 +8,24 @@ import (
 )
 
 var BotName = "GOd of Gamblers"
+var listenPort = "0.0.0.0:8081"
 
-func main() {
+func init() {
+	// not interested in timestamps for logging
 	log.SetFlags(0)
-	http.HandleFunc("/bot/gog", botHandler)
-	http.ListenAndServe("0.0.0.0:8081", nil)
 }
 
-// main handler, triggered by MachinePoker server
+// this is an HTTP bot server for MachinePoker
+func main() {
+	http.HandleFunc("/bot/gog", botHandler)
+	http.ListenAndServe(listenPort, nil)
+}
+
+// main handler, triggered by poker server
 func botHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		fmt.Fprintf(w, "{\"info\": { \"name\": \"%s\" } }", BotName)
+		registerBot(w)
 	case "POST":
 		game := ReadGame(r.Body)
 		DisplayGame(game)
@@ -34,8 +40,11 @@ func botHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func play(game *Game) int {
+func registerBot(w http.ResponseWriter) {
+	fmt.Fprintf(w, "{\"info\": { \"name\": \"%s\" } }", BotName)
+}
 
+func play(game *Game) int {
 	// consider all cards when calculating odds
 	all := append(game.Community, game.Self.Cards...)
 	myCards := Cards(all)
@@ -64,28 +73,26 @@ func play(game *Game) int {
 
 func calculatePreflopBet(game *Game, myHand *hand.Hand) int {
 	if myHand.Ranking() == hand.Pair {
-		return raiseOrCall(game)
-	} else {
-		return call(game)
+		return raise(game)
 	}
+	return call(game)
 }
 
 func calculateBet(game *Game, myHand *hand.Hand) int {
 	if myHand.Ranking() >= hand.TwoPair {
-		return raiseOrCall(game)
+		return raise(game)
 	} else if myHand.Ranking() >= hand.Pair || game.Self.Wagered > 30 {
 		return call(game)
 	}
 	return fold(game)
 }
 
-func raiseOrCall(game *Game) int {
+func raise(game *Game) int {
 	if game.Betting.CanRaise {
 		logger.Println("-> raising:", game.Betting.Raise)
 		return game.Betting.Raise
-	} else {
-		return call(game)
 	}
+	return call(game)
 }
 
 func call(game *Game) int {
