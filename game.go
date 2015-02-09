@@ -5,6 +5,7 @@ import (
 	"io"
 )
 
+// The game object reverse-engineered from PokerJS JSON
 type Game struct {
 	Community []string
 	State     string

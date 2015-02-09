@@ -10,10 +10,12 @@ import (
 var BotName = "GOd of Gamblers"
 
 func main() {
+	log.SetFlags(0)
 	http.HandleFunc("/bot/gog", botHandler)
 	http.ListenAndServe("0.0.0.0:8081", nil)
 }
 
+// main handler, triggered by MachinePoker server
 func botHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
@@ -40,7 +42,7 @@ func play(game *Game) int {
 
 	// convert to joker hand and calculate ranking
 	myHand := hand.New(myCards)
-	log.Println("** myHand:", myHand)
+	logger.Println("** myHand:", myHand)
 
 	// TODO: printed value of rank is wrong, subtract 1
 	// fmt.Printf("ranking: %s\n", myHand.Ranking()-1)
@@ -79,7 +81,7 @@ func calculateBet(game *Game, myHand *hand.Hand) int {
 
 func raiseOrCall(game *Game) int {
 	if game.Betting.CanRaise {
-		log.Println("-> raising:", game.Betting.Raise)
+		logger.Println("-> raising:", game.Betting.Raise)
 		return game.Betting.Raise
 	} else {
 		return call(game)
@@ -87,11 +89,11 @@ func raiseOrCall(game *Game) int {
 }
 
 func call(game *Game) int {
-	log.Println("-> calling:", game.Betting.Call)
+	logger.Println("-> calling:", game.Betting.Call)
 	return game.Betting.Call
 }
 
 func fold(game *Game) int {
-	log.Println("-> folding")
+	logger.Println("-> folding")
 	return 0
 }
