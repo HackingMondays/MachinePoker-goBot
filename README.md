@@ -1,11 +1,75 @@
-Hacking Monday : Poker Robot
-============================
+Hacking Monday : Poker Robot in GO
+==================================
+
+Required
+--------
+MachinePoker - URL
+GOdOfGamblers - URL
+
+
+Poker GO libraries
+------------------
 
 * https://github.com/loganjspears/joker/blob/master/hand/hand.go
 * https://github.com/cmccabe/poker-odds
 
-19-01-2015 : Setup GO environment
----------------------------------
+
+Server
+------
+Install:
+~~~
+cd MachinePoker
+sudo npm install -g coffee-script
+sudo npm install -g bower
+cd src/public/
+bower install
+~~~
+
+go to `MachinePoker` and run start.sh`
+
+Server URL:
+http://localhost:8080/
+
+Graphical view (requires Flash)
+http://localhost:8080/playViewer.html
+
+
+Bots
+----
+On MacOS you need to open firewall for bot.
+
+### Rodribot
+~~~
+git clone https://github.com/reyesr/rodribot-poker.git
+cd rodribot-poker
+npm install
+/opt/local/bin/node index.js
+~~~
+
+Bot URL:
+http://localhost:5000/bot/perfect-rodribot
+
+
+### GOd of Gamblers
+~~~
+git clone https://github.com/tischda/gog.git
+cd gog
+go build -o bin/gog .
+bin/gog
+~~~
+
+Bot URL:
+http://localhost:8081/bot/gog
+
+
+Games Notes
+===========
+raise: minimum amount you can raise, but you can bet more
+up to everything you have ("All In")
+
+
+GO environment
+==============
 
 ### Sublime Text
 
@@ -44,7 +108,7 @@ Edit project file and add:
     },
 
 
-### IdeaJ
+### IdeaJ (TODO: review for 1.0.0)
 https://github.com/go-lang-plugin-org/go-lang-idea-plugin/releases
 
 Install Go Plugin 1.0.0.alpha#11:
@@ -79,59 +143,3 @@ File, Project Structure, Platform Settings, SDKs
         `/Users/daniel/src/go/src`
 
 File, Project Structure, Modules, Sources -> check sources marked in blue
-
-
-Server
-------
-Install:
-~~~
-cd MachinePoker
-sudo npm install -g coffee-script
-sudo npm install -g bower
-cd src/public/
-bower install
-~~~
-
-
-go to `MachinePoker` and run start.sh`
-
-Server:
-http://localhost:8080/
-
-Graphical view (requires Flash)
-http://localhost:8080/playViewer.html
-
-Bots
-----
-
-### Rodribot
-~~~
-git clone https://github.com/reyesr/rodribot-poker.git
-cd rodribot-poker
-npm install
-/opt/local/bin/node index.js
-~~~
-
-Bot URL:
-http://localhost:5000/bot/perfect-rodribot
-
-
-### GOd of Gamblers
-~~~
-git clone https://github.com/tischda/gog.git
-cd gog
-go build -o bin/gog .
-bin/gog
-~~~
-
-Bot URL:
-http://localhost:8081/bot/gog
-
-
-Games Notes
------------
-raise: minimum amount you can raise, but you can bet more
-up to everything you have ("All In")
-
-Best Cherry switches: best feedback but noisy: blue (click-click)
-                      and red is nice too.
