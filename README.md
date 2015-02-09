@@ -93,7 +93,7 @@ bower install
 ~~~
 
 
-go to MachinePoker and run start.sh
+go to `MachinePoker` and run start.sh`
 
 Server:
 http://localhost:8080/
@@ -101,5 +101,37 @@ http://localhost:8080/
 Graphical view (requires Flash)
 http://localhost:8080/playViewer.html
 
+Bots
+----
+
+### Rodribot
+~~~
+git clone https://github.com/reyesr/rodribot-poker.git
+cd rodribot-poker
+npm install
+/opt/local/bin/node index.js
+~~~
+
+Bot URL:
+http://localhost:5000/bot/perfect-rodribot
 
 
+### GOd of Gamblers
+~~~
+git clone https://github.com/tischda/gog.git
+cd gog
+go build -o bin/gog .
+bin/gog
+~~~
+
+Bot URL:
+http://localhost:8081/bot/gog
+
+
+Games Notes
+-----------
+raise: minimum amount you can raise, but you can bet more
+up to everything you have ("All In")
+
+Best Cherry switches: best feedback but noisy: blue (click-click)
+                      and red is nice too.

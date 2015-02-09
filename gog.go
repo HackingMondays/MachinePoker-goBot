@@ -79,11 +79,13 @@ func calculatePreflopBet(game *Game, myHand *hand.Hand) int {
 }
 
 func calculateBet(game *Game, myHand *hand.Hand) int {
-	if myHand.Ranking() >= hand.TwoPair {
-		return raise(game)
-	} else if myHand.Ranking() >= hand.Pair || game.Self.Wagered > 30 {
-		return call(game)
-	}
+    if safeguard(game, myHand) {
+        if myHand.Ranking() >= hand.TwoPair {
+            return raise(game)
+        } else if (myHand.Ranking() >= hand.Pair || game.Self.Wagered > 50) {
+            return call(game)
+        }
+    }
 	return fold(game)
 }
 
@@ -103,4 +105,14 @@ func call(game *Game) int {
 func fold(game *Game) int {
 	logger.Println("-> folding")
 	return 0
+}
+
+func safeguard(game *Game, myHand *hand.Hand) bool {
+	if game.Betting.Call < 100 {
+		return true
+	}
+    if myHand.Ranking() >= hand.ThreeOfAKind {
+        return true
+    }
+    return false
 }
