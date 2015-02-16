@@ -17,17 +17,17 @@ func Cards(list []string) []*hand.Card {
 
 func card(s string) *hand.Card {
     if len(s) != 2 {
-        panic("jokertest: card string must be two characters")
+        panic("card string must be two characters")
     }
 
     rank, ok := rankMap[s[:1]]
     if !ok {
-        panic("jokertest: rank not found")
+        panic("rank not found")
     }
 
     suit, ok := suitMap[s[1:]]
     if !ok {
-        panic("jokertest: suit not found")
+        panic("suit not found")
     }
 
     for _, c := range hand.Cards() {
@@ -35,7 +35,7 @@ func card(s string) *hand.Card {
             return c
         }
     }
-    panic("jokertest: card not found")
+    panic("card not found")
 }
 
 var (
