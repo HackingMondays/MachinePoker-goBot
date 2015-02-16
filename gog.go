@@ -53,7 +53,7 @@ func play(game *Game) int {
 	myHand := hand.New(myCards)
 	logger.Println("** myHand:", myHand)
 
-	// TODO: printed value of rank is wrong, subtract 1
+	// Note: printed value of rank is wrong, subtract 1
 	// fmt.Printf("ranking: %s\n", myHand.Ranking()-1)
 
 	switch game.State {

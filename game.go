@@ -15,6 +15,8 @@ type Game struct {
 	Players   []Player
 }
 
+// Raise: minimum amount you can raise
+// up to everything you have ("All In")
 type Betting struct {
 	Call     int
 	Raise    int
