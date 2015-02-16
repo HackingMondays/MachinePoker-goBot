@@ -1,5 +1,5 @@
-Poker Bot in GO
-===============
+MachinePoker Bot in GO
+======================
 
 Requirements
 ------------
