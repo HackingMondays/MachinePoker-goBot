@@ -21,10 +21,10 @@ bower install
 start with: `npm run server-open`
 
 Server URL:
-http://localhost:8080/
+`http://localhost:8080/`
 
 Poker table (requires Flash):
-http://localhost:8080/playViewer.html
+`http://localhost:8080/playViewer.html`
 
 
 Bots
@@ -40,7 +40,7 @@ npm install
 ~~~
 
 Bot URL:
-http://localhost:5000/bot/perfect-rodribot
+`http://localhost:5000/bot/perfect-rodribot`
 
 
 ### GOd of Gamblers
@@ -52,7 +52,7 @@ bin/gog
 ~~~
 
 Bot URL:
-http://localhost:8081/bot/gog
+`http://localhost:8081/bot/gog`
 
 
 Poker GO libraries
