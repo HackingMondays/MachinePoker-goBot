@@ -47,6 +47,7 @@ Bot URL:
 ~~~
 git clone https://github.com/tischda/MachinePoker-goBot.git gog
 cd gog
+go get github.com/loganjspears/joker/hand
 go build -o bin/gog .
 bin/gog
 ~~~
@@ -57,5 +58,5 @@ Bot URL:
 
 Poker GO libraries
 ------------------
-* https://github.com/loganjspears/joker/blob/master/hand/hand.go
+* https://github.com/loganjspears/joker/hand
 * https://github.com/cmccabe/poker-odds
