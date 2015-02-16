@@ -3,8 +3,8 @@ Poker Bot in GO
 
 Requirements
 ------------
-NodeJS
-GO 1.4.1
+* NodeJS
+* GO 1.4.1
 
 Server
 ------
