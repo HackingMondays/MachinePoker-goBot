@@ -52,7 +52,7 @@ bin/gog
 ~~~
 
 Bot URL:
-`http://localhost:8081/bot/gog`
+`http://localhost:5000/bot/gog`
 
 
 Poker GO libraries

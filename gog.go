@@ -8,7 +8,7 @@ import (
 )
 
 var BotName = "GOd of Gamblers"
-var listenPort = ":8081"
+var listenPort = ":5000"
 
 func init() {
 	// not interested in timestamps for logging
