@@ -45,7 +45,7 @@ Bot URL:
 
 ### GOd of Gamblers
 ~~~
-git clone https://github.com/tischda/gog.git
+git clone https://github.com/tischda/MachinePoker-goBot.git gog
 cd gog
 go build -o bin/gog .
 bin/gog
