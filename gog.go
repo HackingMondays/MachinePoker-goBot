@@ -47,42 +47,43 @@ func registerBot(w http.ResponseWriter) {
 func play(game *Game) int {
 	// consider all cards when calculating odds
 	all := append(game.Community, game.Self.Cards...)
-	myCards := Cards(all)
+	allCards := Cards(all)
 
 	// convert to joker hand and calculate ranking
-	myHand := hand.New(myCards)
-	logger.Println("** myHand:", myHand)
+	allHand := hand.New(allCards)
+	logger.Println("** myHand:", allHand)
 
 	// Note: printed value of rank is wrong, subtract 1
 	// fmt.Printf("ranking: %s\n", myHand.Ranking()-1)
 
 	switch game.State {
 	case "pre-flop":
-		return calculatePreflopBet(game, myHand)
+		return calculatePreflopBet(game, allHand)
 	case "flop":
-		return calculateBet(game, myHand)
+		return calculateBet(game, allHand)
 	case "turn":
-		return calculateBet(game, myHand)
+		return calculateBet(game, allHand)
 	case "river":
-		return calculateBet(game, myHand)
+		return calculateBet(game, allHand)
 	default:
 		log.Fatal("Undefined game state:", game.State)
 		return -1
 	}
 }
 
-func calculatePreflopBet(game *Game, myHand *hand.Hand) int {
-	if myHand.Ranking() == hand.Pair {
+func calculatePreflopBet(game *Game, allHand *hand.Hand) int {
+	if allHand.Ranking() == hand.Pair {
 		return raise(game)
 	}
 	return call(game)
 }
 
-func calculateBet(game *Game, myHand *hand.Hand) int {
-    if safeguard(game, myHand) {
-        if myHand.Ranking() >= hand.TwoPair {
+func calculateBet(game *Game, allHand *hand.Hand) int {
+    if safeguard(game, allHand) {
+        myHand := hand.New(Cards(game.Self.Cards))
+        if myHand.Ranking() == hand.Pair && allHand.Ranking() >= hand.TwoPair {
             return raise(game)
-        } else if (myHand.Ranking() >= hand.Pair || game.Self.Wagered > 50) {
+        } else if (allHand.Ranking() >= hand.Pair || game.Self.Wagered > 50) {
             return call(game)
         }
     }
@@ -107,11 +108,12 @@ func fold(game *Game) int {
 	return 0
 }
 
-func safeguard(game *Game, myHand *hand.Hand) bool {
+func safeguard(game *Game, allHand *hand.Hand) bool {
 	if game.Betting.Call < 100 {
 		return true
 	}
-    if myHand.Ranking() >= hand.ThreeOfAKind {
+    myHand := hand.New(Cards(game.Self.Cards))
+    if myHand.Ranking() == hand.Pair && allHand.Ranking() >= hand.ThreeOfAKind {
         return true
     }
     return false
