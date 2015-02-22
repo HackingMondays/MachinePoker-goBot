@@ -40,7 +40,7 @@ func DisplayActions(actionMap map[string][]*Action) {
 func DisplayPlayers(players []Player) {
 	logger.Println("players:")
 	for _, player := range players {
-		if player.Name != BotName {
+		if player.Name != botName {
 			DisplayPlayer(player)
 		}
 	}
