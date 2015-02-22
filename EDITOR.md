@@ -14,12 +14,13 @@ Create New Project (from Welcome screen)
     Go, Next
     (o) Do not create source directory, Next
     Project SDK: Go SDK go1.4.2 darwin/amd64, Next
-    Project Name: `gog`, Finish
+    Project Name: `MachinePoker-goBot`, Finish
 
 Run, Edit configurations...
     +, Go Application
     Name: `gog-app`
-    File: `/Users/daniel/src/hacking/poker/gog/randomhands.go`
+    File: `/Users/daniel/src/hacking/poker/MachinePoker-goBot/gog.go`
+    Before launch: Make
 
 Fix warnings:
 https://github.com/go-lang-plugin-org/go-lang-idea-plugin/issues/318#issuecomment-31303939
