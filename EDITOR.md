@@ -1,8 +1,11 @@
 GO editor configuration
 =======================
 
-### IdeaJ (TODO: review for 1.0.0)
+IdeaJ (TODO: review for 1.0.0)
+------------------------------
 https://github.com/go-lang-plugin-org/go-lang-idea-plugin/releases
+
+### MacOS
 
 Install Go Plugin 1.0.0.alpha#92:
     Preferences, Plugins, Install plugin from disk..., select `Go.92.zip`, Restart
@@ -39,8 +42,22 @@ File, Project Structure, Platform Settings, SDKs
 
 File, Project Structure, Modules, Sources -> check sources marked in blue
 
+### Windows
 
-### Sublime Text
+Different drives are not correctly detected:
+https://github.com/go-lang-plugin-org/go-lang-idea-plugin/issues/1240
+
+Workaround:
+
+~~~
+c:
+cd \
+mklink /d src u:\src
+~~~
+
+
+Sublime Text
+------------
 
 Tools, Command Palette, Package Control:Install Package, GoSublime
 https://github.com/DisposaBoy/GoSublime

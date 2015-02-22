@@ -4,11 +4,12 @@ MachinePoker Bot in GO
 Requirements
 ------------
 * NodeJS
-* GO 1.4.1
+* GO 1.4.2
 
 Server
 ------
 Install:
+
 ~~~
 git clone https://github.com/HackingMondays/MachinePoker.git
 cd MachinePoker
@@ -16,9 +17,10 @@ sudo npm install -g coffee-script
 sudo npm install -g bower
 cd src/public/
 bower install
+cd ../..
 ~~~
 
-start with: `npm run server-open`
+start with: `npm run server-open` (on Windows, you need to run this command within cygwin bash)
 
 Server URL:
 `http://localhost:8080/`
