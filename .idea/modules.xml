@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MackinePoker-goBot.iml" filepath="$PROJECT_DIR$/MackinePoker-goBot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MachinePoker-goBot.iml" filepath="$PROJECT_DIR$/MachinePoker-goBot.iml" />
     </modules>
   </component>
 </project>

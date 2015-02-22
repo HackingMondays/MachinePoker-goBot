@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact build-on-make="true" name="MackinePoker-goBot.exe">
-    <output-path>$PROJECT_DIR$/bin</output-path>
-    <root id="root">
-      <element id="module-output" name="MackinePoker-goBot" />
-    </root>
-  </artifact>
-</component>
