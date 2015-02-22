@@ -52,7 +52,6 @@ func play(game *Game) int {
 	// convert to joker hand and calculate ranking
 	allHand := hand.New(allCards)
 	logger.Println("** myHand:", allHand)
-    logger.Println("** myHand:", allHand)
 
 	// Note: printed value of rank is wrong, subtract 1
 	// fmt.Printf("ranking: %s\n", myHand.Ranking()-1)
