@@ -10,13 +10,11 @@ var botName = "GOd of Gamblers"
 var listenPort = ":5000"
 var pokerPlayer defaultPlayer
 
-func init() {
-	// not interested in timestamps for logging
-	log.SetFlags(0)
-}
-
 // this is an HTTP bot server for MachinePoker
 func main() {
+    // set default logger
+    logger = Info
+
 	http.HandleFunc("/bot/gog", botHandler)
 	http.ListenAndServe(listenPort, nil)
 }

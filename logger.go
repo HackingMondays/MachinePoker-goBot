@@ -1,14 +1,46 @@
+// http://www.goinggo.net/2013/11/using-log-package-in-go.html
 package main
 
 import (
-	"io/ioutil"
+	"io"
 	"log"
-	// "os"
+    "io/ioutil"
+    "os"
 )
 
-// Custom logger that can easily be disabled, see:
-// http://www.goinggo.net/2013/11/using-log-package-in-go.html
+var (
+	Trace   *log.Logger
+	Info    *log.Logger
+	Warning *log.Logger
+	Error   *log.Logger
+)
 
-var logger = log.New(ioutil.Discard,
-	//var logger = log.New(os.Stdout,
-	"DEBUG: ", 0)
+var logger *log.Logger
+
+func init() {
+    // not interested in timestamps for standard logging
+    log.SetFlags(0)
+    InitLogger(ioutil.Discard, os.Stdout, os.Stdout, os.Stderr)
+}
+
+func InitLogger(
+	traceHandle io.Writer,
+	infoHandle io.Writer,
+	warningHandle io.Writer,
+	errorHandle io.Writer) {
+
+	Trace = log.New(traceHandle,
+		"TRACE: ",
+		log.Ldate|log.Ltime|log.Lshortfile)
+
+	Info = log.New(infoHandle,
+		"INFO: ", 0)
+
+	Warning = log.New(warningHandle,
+		"WARNING: ",
+		log.Ldate|log.Ltime|log.Lshortfile)
+
+	Error = log.New(errorHandle,
+		"ERROR: ",
+		log.Ldate|log.Ltime|log.Lshortfile)
+}
