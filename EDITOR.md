@@ -4,13 +4,13 @@ GO editor configuration
 ### IdeaJ (TODO: review for 1.0.0)
 https://github.com/go-lang-plugin-org/go-lang-idea-plugin/releases
 
-Install Go Plugin 1.0.0.alpha#11:
-    Preferences, Plugins, Browse, search for `golang`, Install, Restart
+Install Go Plugin 1.0.0.alpha#92:
+    Preferences, Plugins, Install plugin from disk..., select `Go.92.zip`, Restart
 
 Create New Project (from Welcome screen)
     Go, Next
     (o) Do not create source directory, Next
-    Project SDK: Go SDK go1.4.1 darwin/amd64, Next
+    Project SDK: Go SDK go1.4.2 darwin/amd64, Next
     Project Name: `gog`, Finish
 
 Run, Edit configurations...
@@ -20,17 +20,19 @@ Run, Edit configurations...
 
 Fix warnings:
 https://github.com/go-lang-plugin-org/go-lang-idea-plugin/issues/318#issuecomment-31303939
+
 ~~~
 launchctl setenv GOROOT $GOROOT
 launchctl setenv GOPATH $GOPATH
 ~~~
+
 Restart IdeaJ
 
 Fix auto-completion:
 https://github.com/go-lang-plugin-org/go-lang-idea-plugin/issues/1146
 
 File, Project Structure, Platform Settings, SDKs
-    - add Go SDK (Go SDK go1.4.1 darwin/amd64 in /usr/local/go)
+    - add Go SDK (Go SDK go1.4.2 darwin/amd64 in /usr/local/go)
     - add in SourcePath tab:
         `/usr/local/go/src`
         `/Users/daniel/src/go/src`
@@ -49,6 +51,7 @@ You need to edit `~/Library/Application Support/Sublime Text 2/Packages/GoSublim
 To see what keys were typed:
 
 View, Show Console
+
 ~~~
 sublime.log_input(True)
 ~~~

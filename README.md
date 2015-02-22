@@ -31,7 +31,21 @@ Bots
 ----
 On MacOS, you need to open firewall for bot.
 
+### GOd of Gamblers
+~~~
+git clone https://github.com/tischda/MachinePoker-goBot.git
+cd MachinePoker-goBot
+go get github.com/loganjspears/joker/hand
+go build -o bin/gog .
+bin/gog
+~~~
+
+Bot URL:
+`http://localhost:5000/bot/gog`
+
 ### Rodribot
+This is another bot written in Node.js
+
 ~~~
 git clone https://github.com/reyesr/rodribot-poker.git
 cd rodribot-poker
@@ -42,18 +56,6 @@ npm install
 Bot URL:
 `http://localhost:5000/bot/perfect-rodribot`
 
-
-### GOd of Gamblers
-~~~
-git clone https://github.com/tischda/MachinePoker-goBot.git gog
-cd gog
-go get github.com/loganjspears/joker/hand
-go build -o bin/gog .
-bin/gog
-~~~
-
-Bot URL:
-`http://localhost:5000/bot/gog`
 
 
 Poker GO libraries

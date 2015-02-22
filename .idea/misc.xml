@@ -43,7 +43,7 @@
   <component name="ProjectModuleManager">
     <modules />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_4" assert-keyword="true" jdk-15="false" project-jdk-name="Go 1.4.1" project-jdk-type="Go SDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_4" assert-keyword="true" jdk-15="false" project-jdk-name="Go 1.4.2" project-jdk-type="Go SDK">
     <output url="file://$PROJECT_DIR$/bin" />
   </component>
   <component name="PropertiesComponent">
