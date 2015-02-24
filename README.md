@@ -39,7 +39,7 @@ git clone https://github.com/tischda/MachinePoker-goBot.git
 cd MachinePoker-goBot
 go get github.com/loganjspears/joker/hand
 go build -o bin/gog .
-bin/gog
+bin/gog -port=":5000" -name="GOd of Gamblers"
 ~~~
 
 Bot URL:
@@ -59,8 +59,14 @@ Bot URL:
 `http://localhost:5000/bot/perfect-rodribot`
 
 
+GO libraries
+------------
 
-Poker GO libraries
-------------------
+### Poker
+
 * https://github.com/loganjspears/joker/hand
 * https://github.com/cmccabe/poker-odds
+
+### Logging
+
+* http://stackoverflow.com/questions/16895651/how-to-implement-level-based-logging-in-golang
