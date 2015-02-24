@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+    "strings"
 )
 
 // Utility function to dump a game object to the console
@@ -10,10 +11,10 @@ import (
 func (game *Game) String() string {
 	var buffer bytes.Buffer
 	buffer.WriteString("[--- game ---]")
-	buffer.WriteString("\ncommunity: ")
-	buffer.WriteString(game.Community.String())
-	buffer.WriteString("\ncards: ")
-	buffer.WriteString(game.Self.Cards.String())
+	buffer.WriteString("\ncards (self/community): ")
+    buffer.WriteString(game.Self.Cards.String())
+	buffer.WriteString(" / ")
+    buffer.WriteString(game.Community.String())
 	buffer.WriteString(fmt.Sprintf("\nstate: %s, hand: %d, ", game.State, game.Hand))
 	buffer.WriteString(game.Betting.String())
 
@@ -25,12 +26,7 @@ func (game *Game) String() string {
 }
 
 func (cards GameCards) String() string {
-	var buffer bytes.Buffer
-	for _, card := range cards {
-		buffer.WriteString(card)
-		buffer.WriteString(", ")
-	}
-	return buffer.String()
+    return strings.Join(cards, ", ")
 }
 
 func (betting *Betting) String() string {

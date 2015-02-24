@@ -70,3 +70,8 @@ GO libraries
 ### Logging
 
 * http://stackoverflow.com/questions/16895651/how-to-implement-level-based-logging-in-golang
+
+
+GO language stuff
+-----------------
+* http://stackoverflow.com/questions/1760757/how-to-efficiently-concatenate-strings-in-go
