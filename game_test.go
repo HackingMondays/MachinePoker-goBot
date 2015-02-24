@@ -5,6 +5,7 @@ import (
 	"os"
 	"log"
     "github.com/loganjspears/joker/hand"
+    "fmt"
 )
 
 const dataFile = "data/data.json"
@@ -39,6 +40,6 @@ func TestCardRanking(t *testing.T) {
     }
 }
 
-func TestDisplay(t *testing.T) {
-    DisplayGame(ReadGameFromFile(dataFile))
+func TestGameStringer(t *testing.T) {
+    fmt.Println(ReadGameFromFile(dataFile))
 }

@@ -52,6 +52,6 @@ func betForGame(game *Game) int {
     if game.State != "complete" {
         return pokerPlayer.Play(game)
     }
-    DisplayGame(game)
+    logger.Println(game)
     return 0;
 }

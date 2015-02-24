@@ -7,7 +7,7 @@ import (
 
 // The game object, reverse-engineered from PokerJS JSON
 type Game struct {
-	Community []string
+	Community GameCards
 	State     string
 	Hand      int
 	Betting   Betting
@@ -31,10 +31,12 @@ type Self struct {
 	State    string
 	Chips    int
 	Actions  map[string][]*Action
-	Cards    []string
+	Cards    GameCards
 	Position int
 	Brain    []string
 }
+
+type GameCards []string
 
 type Action struct {
 	Type string
