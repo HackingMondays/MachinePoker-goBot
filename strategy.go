@@ -12,13 +12,12 @@ type PokerPlayer interface {
 type defaultPlayer struct { }
 
 func (p *defaultPlayer) Play(game *Game) int {
-	// consider all cards when calculating odds
+	// consider all cards when evaluating hand
 	all := append(game.Community, game.Self.Cards...)
 	allCards := Cards(all)
 
 	// convert to joker hand and calculate ranking
 	allHand := hand.New(allCards)
-	logger.Println("** myHand:", allHand)
 
 	switch game.State {
 	case "pre-flop":
@@ -56,19 +55,16 @@ func calculateBet(game *Game, allHand *hand.Hand) int {
 
 func raise(game *Game) int {
 	if game.Betting.CanRaise {
-		logger.Println("-> raising:", game.Betting.Raise)
 		return game.Betting.Raise
 	}
 	return call(game)
 }
 
 func call(game *Game) int {
-	logger.Println("-> calling:", game.Betting.Call)
 	return game.Betting.Call
 }
 
 func fold(game *Game) int {
-	logger.Println("-> folding")
 	return 0
 }
 
