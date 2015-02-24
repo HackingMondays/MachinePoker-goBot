@@ -19,7 +19,9 @@ func init() {
 
 // this is an HTTP bot server for MachinePoker
 func main() {
+    // parse command line flags
     flag.Parse()
+
 	// set default logger
 	logger = Info
 
@@ -33,21 +35,23 @@ func botHandler(w http.ResponseWriter, r *http.Request) {
 	case "GET":
 		registerBot(w)
 	case "POST":
-		game := ReadGame(r.Body)
-
-		var bet int
-		if game.State != "complete" {
-			bet = pokerPlayer.Play(game)
-		} else {
-			DisplayGame(game)
-		}
-        // TODO: not betting crashes server !
-        fmt.Fprintf(w, "{\"bet\": \"%d\"}", bet)
+        game := ReadGame(r.Body)
+        fmt.Fprintf(w, "{\"bet\": \"%d\"}", betForGame(game))
 	default:
 		log.Fatal("Method unsupported:", r.Method)
 	}
 }
 
+// registers bot with server
 func registerBot(w http.ResponseWriter) {
 	fmt.Fprintf(w, "{\"info\": { \"name\": \"%s\" } }", botName)
+}
+
+// return bet to server of display completed game
+func betForGame(game *Game) int {
+    if game.State != "complete" {
+        return pokerPlayer.Play(game)
+    }
+    DisplayGame(game)
+    return 0;
 }
