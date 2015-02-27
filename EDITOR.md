@@ -1,14 +1,14 @@
 GO editor configuration
 =======================
 
-IdeaJ (TODO: review for 1.0.0)
-------------------------------
+IdeaJ
+-----
 https://github.com/go-lang-plugin-org/go-lang-idea-plugin/releases
 
 ### MacOS
 
-Install Go Plugin 1.0.0.alpha#92:
-    Preferences, Plugins, Install plugin from disk..., select `Go.92.zip`, Restart
+Install Go Plugin 1.0.0.alpha#134:
+    Preferences, Plugins, Install plugin from disk..., select `Go.134.zip`, Restart
 
 Create New Project (from Welcome screen)
     Go, Next
@@ -19,33 +19,19 @@ Create New Project (from Welcome screen)
 Run, Edit configurations...
     +, Go Application
     Name: `gog-app`
-    File: `/Users/daniel/src/hacking/poker/MachinePoker-goBot/gog.go`
+    File: `<full-path-to>/MachinePoker-goBot/main.go`
     Before launch: Make
-
-Fix warnings:
-https://github.com/go-lang-plugin-org/go-lang-idea-plugin/issues/318#issuecomment-31303939
-
-~~~
-launchctl setenv GOROOT $GOROOT
-launchctl setenv GOPATH $GOPATH
-~~~
-
-Restart IdeaJ
-
-Fix auto-completion:
-https://github.com/go-lang-plugin-org/go-lang-idea-plugin/issues/1146
 
 File, Project Structure, Platform Settings, SDKs
     - add Go SDK (Go SDK go1.4.2 darwin/amd64 in /usr/local/go)
     - add in SourcePath tab:
         `/usr/local/go/src`
-        `/Users/daniel/src/go/src`
 
 File, Project Structure, Modules, Sources -> check sources marked in blue
 
 ### Windows
 
-Different drives are not correctly detected:
+Drives other than c: are not detected/used correctly:
 https://github.com/go-lang-plugin-org/go-lang-idea-plugin/issues/1240
 
 Workaround:
@@ -62,7 +48,7 @@ Sublime Text
 
 Tools, Command Palette, Package Control:Install Package, GoSublime
 https://github.com/DisposaBoy/GoSublime
-Problem -> Key-bindings do not work on FR keyboard ! (super+.)
+Problem -> Key-bindings fail on FR keyboard ! (super+.)
 
 You need to edit `~/Library/Application Support/Sublime Text 2/Packages/GoSublime/Default (OSX).sublime-keymap`
 
