@@ -1,7 +1,7 @@
 package main
 
 import (
-    "flag"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -13,14 +13,14 @@ var pokerPlayer defaultPlayer
 
 // define command line parameters
 func init() {
-    flag.StringVar(&botName, "name", botName, "name of the bot")
-    flag.StringVar(&listenPort, "port", listenPort, "listen port, eg. ':5000'")
+	flag.StringVar(&botName, "name", botName, "name of the bot")
+	flag.StringVar(&listenPort, "port", listenPort, "listen port, eg. ':5000'")
 }
 
 // this is an HTTP bot server for MachinePoker
 func main() {
-    // parse command line flags
-    flag.Parse()
+	// parse command line flags
+	flag.Parse()
 
 	// set default logger
 	logger = Info
@@ -35,8 +35,8 @@ func botHandler(w http.ResponseWriter, r *http.Request) {
 	case "GET":
 		registerBot(w)
 	case "POST":
-        game := ReadGame(r.Body)
-        fmt.Fprintf(w, "{\"bet\": \"%d\"}", betForGame(game))
+		game := ReadGame(r.Body)
+		fmt.Fprintf(w, "{\"bet\": \"%d\"}", betForGame(game))
 	default:
 		log.Fatal("Method unsupported:", r.Method)
 	}
@@ -49,9 +49,9 @@ func registerBot(w http.ResponseWriter) {
 
 // return bet to server of display completed game
 func betForGame(game *Game) int {
-    if game.State != "complete" {
-        return pokerPlayer.Play(game)
-    }
-    logger.Println(game)
-    return 0;
+	if game.State != "complete" {
+		return pokerPlayer.Play(game)
+	}
+	logger.Println(game)
+	return 0
 }

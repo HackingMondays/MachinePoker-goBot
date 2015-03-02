@@ -1,11 +1,11 @@
 package main
 
 import (
-	"testing"
-	"os"
+	"fmt"
+	"github.com/loganjspears/joker/hand"
 	"log"
-    "github.com/loganjspears/joker/hand"
-    "fmt"
+	"os"
+	"testing"
 )
 
 const dataFile = "data/data.json"
@@ -24,22 +24,22 @@ func ReadGameFromFile(fileName string) *Game {
 func TestReadGame(t *testing.T) {
 	var game *Game
 	game = ReadGameFromFile(dataFile)
-    if game.State != "flop" {
-        t.Error("Game stated expected: 'flop', but was", game.State)
-    }
+	if game.State != "flop" {
+		t.Error("Game stated expected: 'flop', but was", game.State)
+	}
 }
 
 func TestCardRanking(t *testing.T) {
-    myCards := Cards([] string { "3c", "3h", "2s" })
-    myHand := hand.New(myCards)
-    rank := myHand.Ranking()
+	myCards := Cards([]string{"3c", "3h", "2s"})
+	myHand := hand.New(myCards)
+	rank := myHand.Ranking()
 
-    // The printed rank is wrong, need to subtract 1
-    if rank != hand.Pair {
-        t.Error("Hand ranking expected: 'Pair', but was", rank-1)
-    }
+	// The printed rank is wrong, need to subtract 1
+	if rank != hand.Pair {
+		t.Error("Hand ranking expected: 'Pair', but was", rank-1)
+	}
 }
 
 func TestGameStringer(t *testing.T) {
-    fmt.Println(ReadGameFromFile(dataFile))
+	fmt.Println(ReadGameFromFile(dataFile))
 }

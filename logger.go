@@ -3,9 +3,9 @@ package main
 
 import (
 	"io"
+	"io/ioutil"
 	"log"
-    "io/ioutil"
-    "os"
+	"os"
 )
 
 var (
@@ -18,11 +18,11 @@ var (
 var logger *log.Logger
 
 func init() {
-    // not interested in timestamps for standard logging
-    log.SetFlags(0)
+	// not interested in timestamps for standard logging
+	log.SetFlags(0)
 
-    // assign output for each logger
-    InitLogger(ioutil.Discard, os.Stdout, os.Stdout, os.Stderr)
+	// assign output for each logger
+	InitLogger(ioutil.Discard, os.Stdout, os.Stdout, os.Stderr)
 }
 
 func InitLogger(

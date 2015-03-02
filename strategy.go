@@ -1,15 +1,15 @@
 package main
 
 import (
-    "log"
-    "github.com/loganjspears/joker/hand"
+	"github.com/loganjspears/joker/hand"
+	"log"
 )
 
 type PokerPlayer interface {
-    Play(game *Game) int
+	Play(game *Game) int
 }
 
-type defaultPlayer struct { }
+type defaultPlayer struct{}
 
 func (p *defaultPlayer) Play(game *Game) int {
 	// consider all cards when evaluating hand
